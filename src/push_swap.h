@@ -6,15 +6,15 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/01/29 22:55:19 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/01/30 01:03:56 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "../libft/libft.h"
-
+# include "../libft/libft/libft.h"
+# include "../libft/printf/ft_printf_bonus.h"
 // Functions for Type Casting (Make Code Cleaner)
 static inline void	*int_to_ptr(int value)
 {
