@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/01/30 01:03:56 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:40:37 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,42 @@
 
 # include "../libft/libft/libft.h"
 # include "../libft/printf/ft_printf_bonus.h"
-// Functions for Type Casting (Make Code Cleaner)
-static inline void	*int_to_ptr(int value)
-{
-	return ((void *)(long)value);
-}
 
-static inline int	ptr_to_int(void *ptr)
+// Linked List
+typedef	struct	s_stack
 {
-	return ((int)(long)ptr);
-}
+	int	value;
+	int	index;
+	int	cost_a;
+	int	cost_b;
+	struct s_stack	*next;
+} t_stack;
+
+// List Operations
+t_stack	*stack_new(int value);
+void	stack_add_front(t_stack **stack, t_stack *new);
+void	stack_add_back(t_stack **stack, t_stack *new);
+int	stack_size(t_stack *stack);
+t_stack	*stack_last(t_stack *stack);
+void	stack_clear(t_stack *stack);
+void	stack_index(t_stack *stack);
 
 // Stack Operations
 // Swap
-void	sa(t_list **a);
-void	sb(t_list **b);
-void	ss(t_list **a, t_list **b);
+void	sa(t_stack **a);
+void	sb(t_stack **b);
+void	ss(t_stack **a, t_stack **b);
+
 // Push
-void	pa(t_list **a, t_list **b);
-void	pb(t_list **b, t_list **a);
+void	pa(t_stack **a, t_stack **b);
+void	pb(t_stack **b, t_stack **a);
+
 // Rotate
-void	ra(t_list **a);
-void	rb(t_list **b);
-void	rr(t_list **a, t_list **b);
-void	rra(t_list **a);
-void	rrb(t_list **b);
-void	rrr(t_list **a, t_list **b);
+void	ra(t_stack **a);
+void	rb(t_stack **b);
+void	rr(t_stack **a, t_stack **b);
+void	rra(t_stack **a);
+void	rrb(t_stack **b);
+void	rrr(t_stack **a, t_stack **b);
 
 #endif
