@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/04 15:40:37 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:52:00 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@
 # include "../libft/printf/ft_printf_bonus.h"
 
 // Linked List
-typedef	struct	s_stack
+typedef struct s_stack
 {
-	int	value;
-	int	index;
-	int	cost_a;
-	int	cost_b;
+	int				value;
+	int				index;
+	int				cost_a;
+	int				cost_b;
 	struct s_stack	*next;
-} t_stack;
+}	t_stack;
 
 // List Operations
-t_stack	*stack_new(int value);
-void	stack_add_front(t_stack **stack, t_stack *new);
-void	stack_add_back(t_stack **stack, t_stack *new);
-int	stack_size(t_stack *stack);
-t_stack	*stack_last(t_stack *stack);
-void	stack_clear(t_stack *stack);
-void	stack_index(t_stack *stack);
+t_stack	*ft_lstnew_ps(int value);
+void	ft_lstadd_front_ps(t_stack **stack, t_stack *new);
+void	ft_lstadd_back_ps(t_stack **stack, t_stack *new);
+int		ft_lstsize_ps(t_stack *stack);
+t_stack	*ft_lstlast_ps(t_stack *stack);
+void	ft_lstclear_ps(t_stack *stack);
+void	ft_lstindex_ps(t_stack *stack);
 
 // Stack Operations
 // Swap
