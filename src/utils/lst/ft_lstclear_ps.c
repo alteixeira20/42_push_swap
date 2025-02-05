@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:04:11 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/05 15:07:59 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:25:57 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_lstclear_ps(t_stack **node)
 	while (*node)
 	{
 		temp = (*node)->next;
-		free(*node);
+		free (*node);
 		*node = temp;
 	}
 	*node = NULL;

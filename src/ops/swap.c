@@ -6,30 +6,38 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 23:48:12 by paalexan          #+#    #+#             */
-/*   Updated: 2025/01/30 00:58:25 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:28:37 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	sa(t_list **a)
+static void	swap(t_stack **stack)
 {
-	void	*temp;
+	t_stack	*first;
+	t_stack	*second;
 
-	if (!a || !*a || !(*a)->next)
+	if (ft_lstsize_ps(*stack) < 2)
 		return ;
-	temp = (*a)->content;
-	(*a)->content = (*a)->next->content;
-	(*a)->next->content = temp;
+	first = *stack;
+	second = first->next;
+	first->next = second->next;
+	second->next = first;
+	*stack = second;
 }
 
-void	sb(t_list **b)
+void	sa(t_stack **a)
 {
-	sa(b);
+	swap(a);
 }
 
-void	ss(t_list **a, t_list **b)
+void	sb(t_stack **b)
 {
-	sa(a);
-	sb(b);
+	swap(b);
+}
+
+void	ss(t_stack **a, t_stack **b)
+{
+	swap(a);
+	swap(b);
 }
