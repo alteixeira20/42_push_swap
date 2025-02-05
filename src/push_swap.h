@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/05 15:52:00 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:30:02 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_lstadd_front_ps(t_stack **stack, t_stack *new);
 void	ft_lstadd_back_ps(t_stack **stack, t_stack *new);
 int		ft_lstsize_ps(t_stack *stack);
 t_stack	*ft_lstlast_ps(t_stack *stack);
-void	ft_lstclear_ps(t_stack *stack);
+void	ft_lstclear_ps(t_stack **stack);
 void	ft_lstindex_ps(t_stack *stack);
 
 // Stack Operations
