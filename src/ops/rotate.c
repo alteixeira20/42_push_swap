@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_ps.c                                :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 14:52:51 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 15:42:50 by paalexan         ###   ########.fr       */
+/*   Created: 2025/02/06 15:12:32 by paalexan          #+#    #+#             */
+/*   Updated: 2025/02/06 15:51:57 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../push_swap.h"
+#include "../push_swap.h"
 
-void	ft_lstadd_back_ps(t_stack **stack, t_stack *new)
+static void	rotate(t_stack **stack)
 {
-	t_stack	*last;
+	t_stack	*first;
 
-	if (!stack || !new)
+	if (ft_lstsize_ps(*stack) < 2)
 		return ;
-	if (!*stack)
-	{
-		*stack = new;
-		return ;
-	}
-	last = ft_lstlast_ps(*stack);
-	last->next = new;
+	first = *stack;
+	*stack = first->next;
+	first->next = NULL;
+	ft_lstadd_back_ps(stack, first);
+}
+
+void	ra(t_stack **a)
+{
+	rotate(a);
+}
+
+void	rb(t_stack **b)
+{
+	rotate(b);
+}
+
+void	rr(t_stack **a, t_stack **b)
+{
+	rotate(a);
+	rotate(b);
 }

@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 17:14:23 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/05 21:11:56 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/06 15:39:39 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,8 @@ LST_SRC  := $(LST_DIR)/ft_lstnew_ps.c \
             $(LST_DIR)/ft_lstclear_ps.c \
             $(LST_DIR)/ft_lstindex_ps.c
 
-OPS_SRC  := $(OPS_DIR)/push.c \
-            $(OPS_DIR)/swap.c
+OPS_SRC  := $(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
+            $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c
 # Object Files
 LST_OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(LST_SRC)))
 OPS_OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(OPS_SRC)))
