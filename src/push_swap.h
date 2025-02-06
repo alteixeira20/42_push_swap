@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/05 17:30:02 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:44:06 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,11 @@ void	rr(t_stack **a, t_stack **b);
 void	rra(t_stack **a);
 void	rrb(t_stack **b);
 void	rrr(t_stack **a, t_stack **b);
+
+// Parsing
+long	ft_atol_ps(const char *str);
+void	convert_and_add(t_stack **stack, const char *arg);
+int		parse_args(t_stack **stack, int argc, char **argv);
+int		check_errors(const char *arg, t_stack *stack);
 
 #endif
