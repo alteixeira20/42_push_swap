@@ -6,13 +6,13 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:58:49 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 20:00:59 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:58:40 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	is_sorted(t_stack *stack)
+int	is_sorted(t_stack *stack)
 {
 	while (stack && stack->next)
 	{
@@ -26,11 +26,11 @@ static int	is_sorted(t_stack *stack)
 void	push_swap(t_stack **a, t_stack **b)
 {
 	if (ft_lstsize_ps(*a) <= 5)
-		sort_small(a);
-	else if (ft_lstsize_ps(*a) <= 100)
-		sort_medium(a, b);
-	else
-		sort_large(a, b);
+		sort_small(a, b);
+	//else if (ft_lstsize_ps(*a) <= 100)
+	//	sort_medium(a, b);
+	//else
+	//	sort_large(a, b);
 }
 
 int	main(int argc, char **argv)
