@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 17:14:23 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/06 17:51:21 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/08 12:44:01 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ OPS_SRC  := $(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
 PARSE_SRC := $(PARSE_DIR)/parsing.c \
              $(PARSE_DIR)/parsing_utils.c \
              $(PARSE_DIR)/parsing_errors.c
+
 # Object Files
 LST_OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(LST_SRC)))
 OPS_OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(OPS_SRC)))
@@ -88,18 +89,20 @@ $(OBJ_DIR)/%.o: $(PARSE_DIR)/%.c
 # Test Stack Operations Functions
 test_ops: $(OPS_OBJ)
 	@mkdir -p $(RESULTS_DIR)
-	@$(CC) $(CFLAGS) $(OPS_OBJ) $(LST_OBJ) $(OPS_TEST) -o $(RESULTS_DIR)/test_ops.out
+	@$(CC) $(CFLAGS) $(OPS_OBJ) $(LST_OBJ) $(OPS_TEST) $(LIBFT) -o $(RESULTS_DIR)/test_ops.out
 	@echo "$(BOLD)🔍 Testing Stack Operations (Push & Swap):$(RESET)"
 	@$(RESULTS_DIR)/test_ops.out > $(RESULTS_DIR)/test_ops.txt
 	@while read -r line; do \
-		fn_name=$$(echo $$line | cut -d':' -f1); \
-		logic=$$(echo $$line | cut -d' ' -f3); \
-		if [ "$$logic" = "[OK]" ]; then \
-			logic_status="$(GREEN)[OK]$(RESET)"; \
-		else \
-			logic_status="$(RED)[KO]$(RESET)"; \
+		if echo "$$line" | grep -q ":"; then \
+			fn_name=$$(echo $$line | cut -d':' -f1); \
+			logic=$$(echo $$line | cut -d' ' -f3); \
+			if [ "$$logic" = "[OK]" ]; then \
+				logic_status="$(GREEN)[OK]$(RESET)"; \
+			else \
+				logic_status="$(RED)[KO]$(RESET)"; \
+			fi; \
+			echo "$(YELLOW) - $$fn_name:$(RESET) $$logic_status"; \
 		fi; \
-		echo "$(YELLOW) - $$fn_name:$(RESET) $$logic_status"; \
 	done < $(RESULTS_DIR)/test_ops.txt
 
 # Test Linked List Functions
@@ -183,7 +186,6 @@ valgrind_lst: test_lst
 	fi; \
 	echo "$(YELLOW) - Valgrind Test:$(RESET) $$valgrind_status"
 	@echo "$(YELLOW)-----------------------------------$(RESET)"
-
 
 # Clean Up
 clean:
