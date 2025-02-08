@@ -6,11 +6,17 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:14:36 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 19:52:01 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:59:52 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
+
+static	void	print_error(void)
+{
+	ft_printf("Error\n");
+	exit(EXIT_FAILURE);
+}
 
 static int	is_overflow(const char *arg)
 {
@@ -45,12 +51,12 @@ int	check_errors(const char *arg, t_stack *stack)
 	while (arg[i])
 	{
 		if (!(arg[i] >= '0' && arg[i] <= '9'))
-			return (1);
+			print_error();
 		i++;
 	}
 	if (is_overflow(arg))
-		return (1);
+		print_error();
 	if (is_duplicate(stack, ft_atol_ps(arg)))
-		return (1);
+		print_error();
 	return (0);
 }
