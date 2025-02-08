@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:12:32 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 15:51:57 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:46:47 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,18 @@ static void	rotate(t_stack **stack)
 void	ra(t_stack **a)
 {
 	rotate(a);
+	ft_printf("ra\n");
 }
 
 void	rb(t_stack **b)
 {
 	rotate(b);
+	ft_printf("rb\n");
 }
 
 void	rr(t_stack **a, t_stack **b)
 {
 	rotate(a);
 	rotate(b);
+	ft_printf("rr\n");
 }

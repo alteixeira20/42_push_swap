@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 19:44:06 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/08 12:10:40 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,8 @@ long	ft_atol_ps(const char *str);
 void	convert_and_add(t_stack **stack, const char *arg);
 int		parse_args(t_stack **stack, int argc, char **argv);
 int		check_errors(const char *arg, t_stack *stack);
+
+// Sorting
+void	sort_small(t_stack **a, t_stack **b);
 
 #endif
