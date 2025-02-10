@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 17:14:23 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/10 16:11:46 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/10 16:28:56 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,19 +43,13 @@ LST_SRC  := $(LST_DIR)/ft_lstnew_ps.c \
 OPS_SRC  := $(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
             $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c
 
-PARSE_SRC := $(PARSE_DIR)/parsing.c \
-             $(PARSE_DIR)/parsing_utils.c \
-             $(PARSE_DIR)/parsing_errors.c
-
 # Object Files
 LST_OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(LST_SRC)))
 OPS_OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(OPS_SRC)))
-PARSE_OBJ := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(PARSE_SRC)))
 
 # Test Executables
 LST_TEST := $(MAIN_DIR)/lst_test.c
 OPS_TEST := $(MAIN_DIR)/ops_test.c
-PARSE_TEST := $(MAIN_DIR)/parsing_test.c
 
 # Colors
 BOLD  := $(shell tput bold)
@@ -71,7 +65,7 @@ RESET := $(shell tput sgr0)
 # **************************************************************************** #
 
 # Default Rule
-all: valgrind_lst valgrind_ops valgrind_parsing
+all: valgrind_lst valgrind_ops
 
 # Build Object Files
 $(OBJ_DIR)/%.o: $(LST_DIR)/%.c
@@ -79,10 +73,6 @@ $(OBJ_DIR)/%.o: $(LST_DIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(OPS_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_DIR)/%.o: $(PARSE_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -122,40 +112,6 @@ test_lst: $(LST_OBJ)
 		fi; \
 		echo "$(YELLOW) - $$fn_name:$(RESET) $$logic_status"; \
 	done < $(RESULTS_DIR)/test_lst.txt
-
-# Test Parsing Functions
-test_parsing: $(PARSE_OBJ) $(LST_OBJ)
-	@mkdir -p $(RESULTS_DIR)
-	@$(CC) $(CFLAGS) $(PARSE_OBJ) $(LST_OBJ) $(PARSE_TEST) -o $(RESULTS_DIR)/test_parsing.out $(LIBFT)
-	@echo "$(BOLD)🔍 Testing Parsing Functions:$(RESET)"
-	-@$(RESULTS_DIR)/test_parsing.out > $(RESULTS_DIR)/test_parsing.txt 2>&1
-	@while read -r line; do \
-		fn_name=$$(echo $$line | cut -d':' -f1); \
-		echo "$(YELLOW) - $$fn_name:$(RESET)"; \
-		logic=$$(echo $$line | awk -F': ' '{print $$2}'); \
-		if [ "$$logic" = "[OK]" ]; then \
-			logic_status="$(GREEN)[OK]$(RESET)"; \
-		else \
-			logic_status="$(RED)[KO]$(RESET)"; \
-		fi; \
-		echo "$(YELLOW) - $$fn_name:$(RESET) $$logic_status"; \
-	done < $(RESULTS_DIR)/test_parsing.txt
-
-# Valgrind Memory Leak Check for Parsing
-valgrind_parsing: test_parsing
-	@echo "$(BOLD)🔍 Running Valgrind for Parsing...$(RESET)"
-	@valgrind $(VFLAGS) $(RESULTS_DIR)/test_parsing.out > $(RESULTS_DIR)/valgrind_parsing.txt 2>&1
-	@valgrind_output=$$(grep "definitely lost:" $(RESULTS_DIR)/valgrind_parsing.txt | awk '{print $$4}'); \
-	if [ -z "$$valgrind_output" ]; then \
-		valgrind_output="0"; \
-	fi; \
-	if [ "$$valgrind_output" = "0" ]; then \
-		valgrind_status="$(GREEN)PASSED$(RESET)"; \
-	else \
-		valgrind_status="$(RED)KO$(RESET) | (Lost: $$valgrind_output bytes)"; \
-	fi; \
-	echo "$(YELLOW) - Valgrind Test:$(RESET) $$valgrind_status"
-	@echo "$(YELLOW)-----------------------------------$(RESET)"
 
 # Valgrind Memory Leak Check
 valgrind_ops: test_ops
