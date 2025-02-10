@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:03:36 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/08 15:26:52 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:19:08 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	find_min_index(t_stack *stack)
 {
 	int		min;
 	int		min_index;
+	int		pos;
 	t_stack	*node;
 
 	if (!stack)
@@ -36,14 +37,39 @@ int	find_min_index(t_stack *stack)
 	min = stack->value;
 	node = stack;
 	min_index = 0;
+	pos = 0;
 	while (node)
 	{
 		if (node->value < min)
 		{
 			min = node->value;
-			min_index++;
+			min_index = pos;
+		}
+		node = node->next;
+		pos++;
+	}
+	return (min_index);
+}
+
+int	find_max_index(t_stack *stack)
+{
+	int		max;
+	int		max_index;
+	t_stack	*node;
+
+	if (!stack)
+		return (-1);
+	max = stack->value;
+	node = stack;
+	max_index = 0;
+	while (node)
+	{
+		if (node->value > max)
+		{
+			max = node->value;
+			max_index++;
 		}
 		node = node->next;
 	}
-	return (min_index);
+	return (max_index);
 }

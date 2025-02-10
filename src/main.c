@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:58:49 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/08 14:58:40 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:17:04 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ void	push_swap(t_stack **a, t_stack **b)
 {
 	if (ft_lstsize_ps(*a) <= 5)
 		sort_small(a, b);
-	//else if (ft_lstsize_ps(*a) <= 100)
-	//	sort_medium(a, b);
-	//else
-	//	sort_large(a, b);
+	else if (ft_lstsize_ps(*a) <= 100)
+		sort_medium(a, b);
 }
 
 int	main(int argc, char **argv)

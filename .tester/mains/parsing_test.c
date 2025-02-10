@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:20:00 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 19:26:12 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:15:17 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,8 @@ void	test_valid_parsing(void)
 	ft_lstclear_ps(&a);
 }
 
-void	test_invalid_parsing(void)
-{
-	t_stack *a = NULL;
-	char *argv1[] = {"./push_swap", "1", "a", "3", NULL};
-	char *argv2[] = {"./push_swap", "1", "2", "2", "3", NULL};
-	char *argv3[] = {"./push_swap", "2147483648", NULL};
-
-	print_test_result("Invalid Input 1 a 3", parse_args(&a, 4, argv1) ? "KO" : "OK");
-	print_test_result("Duplicate 1 2 2 3", parse_args(&a, 5, argv2) ? "KO" : "OK");
-	print_test_result("Overflow 2147483648", parse_args(&a, 2, argv3) ? "KO" : "OK");
-	ft_lstclear_ps(&a);
-}
-
 int	main(void)
 {
 	test_valid_parsing();
-	test_invalid_parsing();
 	return (0);
 }

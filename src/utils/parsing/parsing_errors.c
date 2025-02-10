@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:14:36 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/08 15:59:52 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:55:58 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int	check_errors(const char *arg, t_stack *stack)
 	int	i;
 
 	i = 0;
-	if (arg[i] == '-' || arg[i] == '+')
-		i++;
 	if (!arg[i])
 		return (1);
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
 	while (arg[i])
 	{
 		if (!(arg[i] >= '0' && arg[i] <= '9'))

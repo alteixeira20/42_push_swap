@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/08 15:22:20 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:37:42 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ int		check_errors(const char *arg, t_stack *stack);
 
 // Sorting
 void	sort_small(t_stack **a, t_stack **b);
+void	sort_medium(t_stack **a, t_stack **b);
 
 void	assign_index(t_stack *stack);
 int		find_min_index(t_stack *stack);
 int		is_sorted(t_stack *stack);
+int		find_max_index(t_stack *stack);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 17:14:23 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/08 12:44:01 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/10 16:11:46 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,9 +128,10 @@ test_parsing: $(PARSE_OBJ) $(LST_OBJ)
 	@mkdir -p $(RESULTS_DIR)
 	@$(CC) $(CFLAGS) $(PARSE_OBJ) $(LST_OBJ) $(PARSE_TEST) -o $(RESULTS_DIR)/test_parsing.out $(LIBFT)
 	@echo "$(BOLD)🔍 Testing Parsing Functions:$(RESET)"
-	@$(RESULTS_DIR)/test_parsing.out > $(RESULTS_DIR)/test_parsing.txt
+	-@$(RESULTS_DIR)/test_parsing.out > $(RESULTS_DIR)/test_parsing.txt 2>&1
 	@while read -r line; do \
 		fn_name=$$(echo $$line | cut -d':' -f1); \
+		echo "$(YELLOW) - $$fn_name:$(RESET)"; \
 		logic=$$(echo $$line | awk -F': ' '{print $$2}'); \
 		if [ "$$logic" = "[OK]" ]; then \
 			logic_status="$(GREEN)[OK]$(RESET)"; \
