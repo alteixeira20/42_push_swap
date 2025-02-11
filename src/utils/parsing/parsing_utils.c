@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:20:11 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 20:04:34 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/11 22:40:24 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,19 @@ void	convert_and_add(t_stack **stack, const char *arg)
 	num = ft_atol_ps(arg);
 	new_node = ft_lstnew_ps(num);
 	ft_lstadd_back_ps(stack, new_node);
+}
+
+void	ft_free_array(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
