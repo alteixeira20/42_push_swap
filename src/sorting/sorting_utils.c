@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 14:03:36 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/10 16:19:08 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:44:30 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,25 @@
 
 void	assign_index(t_stack *stack)
 {
-	int	i;
+	t_stack	*current;
+	t_stack	*compare;
+	int		index;
 
-	i = 0;
-	while (stack)
+	if (!stack)
+		return ;
+	current = stack;
+	while (current)
 	{
-		stack->index = i;
-		stack = stack->next;
-		i++;
+		index = 0;
+		compare = stack;
+		while (compare)
+		{
+			if (compare->value < current->value)
+				index++;
+			compare = compare->next;
+		}
+		current->index = index;
+		current = current->next;
 	}
 }
 

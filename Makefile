@@ -32,7 +32,7 @@ SRC  := $(SRC_DIR)/main.c \
         $(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
         $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c \
         $(PARSE_DIR)/parsing.c $(PARSE_DIR)/parsing_utils.c $(PARSE_DIR)/parsing_errors.c \
-        $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_medium.c $(SORT_DIR)/sorting_utils.c
+        $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c
 
 OBJ		:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 
