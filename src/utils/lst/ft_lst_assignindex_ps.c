@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstindex_ps.c                                   :+:      :+:    :+:   */
+/*   ft_lst_assignindex_ps.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:08:25 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/05 21:31:37 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:20:45 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static void	assign_indices(t_stack *node, int *values, int size)
 	}
 }
 
-void	ft_lstindex_ps(t_stack *node)
+void	ft_lst_assignindex_ps(t_stack *node)
 {
 	int	*values;
 	int	size;
 
 	if (!node)
 		return ;
-	size = ft_lstsize_ps(node);
+	size = ft_lst_size_ps(node);
 	values = (int *) malloc(size * sizeof(int));
 	if (!values)
 		return ;

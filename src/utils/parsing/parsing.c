@@ -6,17 +6,53 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:06:02 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/11 22:41:46 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:22:48 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
+static void	free_array(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+static int	parse_split_and_add(t_stack **a, char *arg)
+{
+	char	**split_args;
+	int		j;
+
+	split_args = ft_split(arg, ' ');
+	if (!split_args)
+		return (0);
+	j = 0;
+	while (split_args[j])
+	{
+		if (check_errors(split_args[j], *a))
+		{
+			free_array(split_args);
+			return (0);
+		}
+		convert_and_add(a, split_args[j]);
+		j++;
+	}
+	free_array(split_args);
+	return (1);
+}
+
 int	parse_args(t_stack **a, int argc, char **argv)
 {
-	int		i;
-	int		j;
-	char	**split_args;
+	int	i;
 
 	if (argc < 2)
 		return (0);
@@ -25,21 +61,8 @@ int	parse_args(t_stack **a, int argc, char **argv)
 	{
 		if (ft_strchr(argv[i], ' '))
 		{
-			split_args = ft_split(argv[i], ' ');
-			if (!split_args)
+			if (!parse_split_and_add(a, argv[i]))
 				return (0);
-			j = 0;
-			while (split_args[j])
-			{
-				if (check_errors(split_args[j], *a))
-				{
-					ft_free_array(split_args);
-					return (0);
-				}
-				convert_and_add(a, split_args[j]);
-				j++;
-			}
-			ft_free_array(split_args);
 		}
 		else
 		{

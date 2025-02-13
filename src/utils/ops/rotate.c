@@ -1,28 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_ps.c                                     :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 15:41:28 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/05 15:41:30 by paalexan         ###   ########.fr       */
+/*   Created: 2025/02/06 15:12:32 by paalexan          #+#    #+#             */
+/*   Updated: 2025/02/13 17:25:35 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
-t_stack	*ft_lstnew_ps(int value)
+static void	rotate(t_stack **stack)
 {
-	t_stack	*new_node;
+	t_stack	*first;
 
-	new_node = (t_stack *) malloc(sizeof(t_stack));
-	if (!new_node)
-		return (NULL);
-	new_node->value = value;
-	new_node->index = -1;
-	new_node->cost_a = 0;
-	new_node->cost_b = 0;
-	new_node->next = NULL;
-	return (new_node);
+	if (ft_lst_size_ps(*stack) < 2)
+		return ;
+	first = *stack;
+	*stack = first->next;
+	first->next = NULL;
+	ft_lst_addbottom_ps(stack, first);
+}
+
+void	ra(t_stack **a)
+{
+	rotate(a);
+	ft_printf("ra\n");
+}
+
+void	rb(t_stack **b)
+{
+	rotate(b);
+	ft_printf("rb\n");
+}
+
+void	rr(t_stack **a, t_stack **b)
+{
+	rotate(a);
+	rotate(b);
+	ft_printf("rr\n");
 }

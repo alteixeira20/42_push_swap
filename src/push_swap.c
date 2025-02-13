@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_ps.c                                    :+:      :+:    :+:   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 14:58:02 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/05 14:59:23 by paalexan         ###   ########.fr       */
+/*   Created: 2025/02/06 16:58:49 by paalexan          #+#    #+#             */
+/*   Updated: 2025/02/13 20:17:39 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../push_swap.h"
+#include "push_swap.h"
 
-int	ft_lstsize_ps(t_stack *node)
+void	push_swap(t_stack **a, t_stack **b)
 {
-	int	count;
+	if (ft_lst_size_ps(*a) <= 5)
+		sort_small(a, b);
+	//else
+	//	sort_large(a, b);
+}
 
-	count = 0;
-	while (node)
+int	main(int argc, char **argv)
+{
+	t_stack	*a;
+	t_stack	*b;
+
+	a = NULL;
+	b = NULL;
+	parse_args(&a, argc, argv);
+	if (!a || is_sorted(a))
 	{
-		count++;
-		node = node->next;
+		ft_lst_clear_ps(&a);
+		return (0);
 	}
-	return (count);
+	push_swap(&a, &b);
+	ft_lst_clear_ps(&a);
+	ft_lst_clear_ps(&b);
+	return (0);
 }

@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_ps.c                                   :+:      :+:    :+:   */
+/*   ft_lst_min_ps.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 15:04:11 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/05 21:25:57 by paalexan         ###   ########.fr       */
+/*   Created: 2025/02/13 16:17:34 by paalexan          #+#    #+#             */
+/*   Updated: 2025/02/13 21:18:40 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
-void	ft_lstclear_ps(t_stack **node)
+t_stack	*ft_lst_min_ps(t_stack *stack)
 {
-	t_stack	*temp;
+	t_stack	*min_node;
 
-	if (!node || !*node)
-		return ;
-	while (*node)
+	if (!stack)
+		return (NULL);
+	min_node = stack;
+	while (stack)
 	{
-		temp = (*node)->next;
-		free (*node);
-		*node = temp;
+		if (stack->value < min_node->value)
+			min_node = stack;
+		stack = stack->next;
 	}
-	*node = NULL;
+	return (min_node);
 }

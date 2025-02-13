@@ -6,15 +6,15 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:14:36 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/08 20:55:58 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:17:50 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
-static	void	print_error(void)
+void	print_error(void)
 {
-	ft_printf("Error\n");
+	ft_putstr_fd("Error\n", 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -39,6 +39,23 @@ static int	is_duplicate(t_stack *stack, int num)
 	return (0);
 }
 
+static int	check_syntax(const char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (!(arg[i] == '+' || arg[i] == '-' || (arg[i] >= '0' && arg[i] <= '9')))
+		return (1);
+	if ((arg[i] == '+' || arg[i] == '-') && !(arg[1] >= '0' && arg[1] <= '9'))
+		return (1);
+	while (arg[++i])
+	{
+		if (!(arg[i] >= '0' && arg[i] <= '9'))
+			return (1);
+	}
+	return (0);
+}
+
 int	check_errors(const char *arg, t_stack *stack)
 {
 	int	i;
@@ -46,6 +63,8 @@ int	check_errors(const char *arg, t_stack *stack)
 	i = 0;
 	if (!arg[i])
 		return (1);
+	if (check_syntax(arg))
+		print_error();
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	while (arg[i])

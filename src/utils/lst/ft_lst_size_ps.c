@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_ps.c                                :+:      :+:    :+:   */
+/*   ft_lst_size_ps.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 14:52:51 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/06 15:42:50 by paalexan         ###   ########.fr       */
+/*   Created: 2025/02/05 14:58:02 by paalexan          #+#    #+#             */
+/*   Updated: 2025/02/13 16:41:26 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
-void	ft_lstadd_back_ps(t_stack **stack, t_stack *new)
+int	ft_lst_size_ps(t_stack *node)
 {
-	t_stack	*last;
+	int	count;
 
-	if (!stack || !new)
-		return ;
-	if (!*stack)
+	count = 0;
+	while (node)
 	{
-		*stack = new;
-		return ;
+		count++;
+		node = node->next;
 	}
-	last = ft_lstlast_ps(*stack);
-	last->next = new;
+	return (count);
 }

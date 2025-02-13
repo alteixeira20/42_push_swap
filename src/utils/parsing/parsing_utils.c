@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:20:11 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/11 22:40:24 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:33:41 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ long	ft_atol_ps(const char *str)
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (LONG_MAX);
+			print_error();
 		result = result * 10 + (str[i] - '0');
 		if ((sign == 1 && result > INT_MAX)
 			|| (sign == -1 && sign * result < INT_MIN))
-			return (LONG_MAX);
+			print_error();
 		i++;
 	}
 	return (result * sign);
@@ -47,21 +47,6 @@ void	convert_and_add(t_stack **stack, const char *arg)
 	t_stack	*new_node;
 
 	num = ft_atol_ps(arg);
-	new_node = ft_lstnew_ps(num);
-	ft_lstadd_back_ps(stack, new_node);
-}
-
-void	ft_free_array(char **arr)
-{
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
+	new_node = ft_lst_new_ps(num);
+	ft_lst_addbottom_ps(stack, new_node);
 }

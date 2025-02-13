@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/10 19:21:50 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:10:44 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/libft/libft.h"
 # include "../libft/printf/ft_printf_bonus.h"
+# include "../libft/gnl/get_next_line_bonus.h"
 
 // Linked List
 typedef struct s_stack
@@ -23,29 +24,29 @@ typedef struct s_stack
 	int				index;
 	int				cost_a;
 	int				cost_b;
+	int				above_median;
+	struct s_stack	*target_node;
 	struct s_stack	*next;
 }	t_stack;
 
 // List Operations
-t_stack	*ft_lstnew_ps(int value);
-void	ft_lstadd_front_ps(t_stack **stack, t_stack *new);
-void	ft_lstadd_back_ps(t_stack **stack, t_stack *new);
-int		ft_lstsize_ps(t_stack *stack);
-t_stack	*ft_lstlast_ps(t_stack *stack);
-void	ft_lstclear_ps(t_stack **stack);
-void	ft_lstindex_ps(t_stack *stack);
+t_stack	*ft_lst_new_ps(int value);
+void	ft_lst_addtop_ps(t_stack **stack, t_stack *new);
+void	ft_lst_addbottom_ps(t_stack **stack, t_stack *new);
+int		ft_lst_size_ps(t_stack *stack);
+t_stack	*ft_lst_last_ps(t_stack *stack);
+void	ft_lst_clear_ps(t_stack **stack);
+t_stack	*ft_lst_min_ps(t_stack *stack);
+t_stack	*ft_lst_max_ps(t_stack *stack);
+void	ft_lst_assignindex_ps(t_stack *stack);
+t_stack	*ft_lst_findindex_ps(t_stack *stack, int index);
 
 // Stack Operations
-// Swap
 void	sa(t_stack **a);
 void	sb(t_stack **b);
 void	ss(t_stack **a, t_stack **b);
-
-// Push
 void	pa(t_stack **a, t_stack **b);
 void	pb(t_stack **b, t_stack **a);
-
-// Rotate
 void	ra(t_stack **a);
 void	rb(t_stack **b);
 void	rr(t_stack **a, t_stack **b);
@@ -58,14 +59,15 @@ long	ft_atol_ps(const char *str);
 void	convert_and_add(t_stack **stack, const char *arg);
 int		parse_args(t_stack **stack, int argc, char **argv);
 int		check_errors(const char *arg, t_stack *stack);
+void	print_error(void);
 
 // Sorting
 void	sort_small(t_stack **a, t_stack **b);
 void	sort_large(t_stack **a, t_stack **b);
-
-void	assign_index(t_stack *stack);
-int		find_min_index(t_stack *stack);
 int		is_sorted(t_stack *stack);
-int		find_max_index(t_stack *stack);
+
+// Costs
+void	assign_costs(t_stack *a, t_stack *b);
+t_stack	*find_cheapest_move(t_stack *b);
 
 #endif

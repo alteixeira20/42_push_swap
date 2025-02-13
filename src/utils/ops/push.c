@@ -1,46 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 23:48:12 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/08 11:47:22 by paalexan         ###   ########.fr       */
+/*   Created: 2025/01/30 00:38:46 by paalexan          #+#    #+#             */
+/*   Updated: 2025/02/13 17:24:51 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
-static void	swap(t_stack **stack)
+void	pa(t_stack **a, t_stack **b)
 {
-	t_stack	*first;
-	t_stack	*second;
+	t_stack	*temp;
 
-	if (ft_lstsize_ps(*stack) < 2)
+	if (!b || !(*b))
 		return ;
-	first = *stack;
-	second = first->next;
-	first->next = second->next;
-	second->next = first;
-	*stack = second;
+	temp = *b;
+	*b = (*b)->next;
+	temp->next = NULL;
+	ft_lst_addtop_ps(a, temp);
+	ft_printf("pa\n");
 }
 
-void	sa(t_stack **a)
+void	pb(t_stack **b, t_stack **a)
 {
-	swap(a);
-	ft_printf("sa\n");
-}
+	t_stack	*temp;
 
-void	sb(t_stack **b)
-{
-	swap(b);
-	ft_printf("sb\n");
-}
-
-void	ss(t_stack **a, t_stack **b)
-{
-	swap(a);
-	swap(b);
-	ft_printf("ss\n");
+	if (!a || !(*a))
+		return ;
+	temp = *a;
+	*a = (*a)->next;
+	temp->next = NULL;
+	ft_lst_addtop_ps(b, temp);
+	ft_printf("pb\n");
 }
