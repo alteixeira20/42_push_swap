@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:06:02 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/13 21:22:48 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:29:03 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,37 @@ static int	parse_split_and_add(t_stack **a, char *arg)
 	return (1);
 }
 
+static int	ft_isstringempty(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_iswhitespace(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	check_localerrors(int argc, char *argv)
+{
+	while (ft_isstringempty(argv) && argc > 2)
+	{
+		print_error();
+		return (1);
+	}
+	return (0);
+}
+
 int	parse_args(t_stack **a, int argc, char **argv)
 {
 	int	i;
 
 	if (argc < 2)
+		return (0);
+	if (check_localerrors(argc, argv[1]))
 		return (0);
 	i = 1;
 	while (i < argc)
@@ -72,5 +98,6 @@ int	parse_args(t_stack **a, int argc, char **argv)
 		}
 		i++;
 	}
+	ft_lst_assignindex_ps(*a);
 	return (1);
 }

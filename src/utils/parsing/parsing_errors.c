@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:14:36 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/13 20:17:50 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:22:50 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	print_error(void)
 {
 	ft_putstr_fd("Error\n", 2);
-	exit(EXIT_FAILURE);
 }
 
 static int	is_overflow(const char *arg)
