@@ -6,18 +6,29 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:58:49 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/13 20:17:39 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:20:27 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_swap(t_stack **a, t_stack **b)
+static void	push_swap(t_stack **a, t_stack **b)
 {
 	if (ft_lst_size_ps(*a) <= 5)
+	{
 		sort_small(a, b);
-	//else
-	//	sort_large(a, b);
+		ft_lst_clear_ps(a);
+		ft_lst_clear_ps(b);
+	}
+	else
+	{
+		while (ft_lst_size_ps(*a) > 3)
+			pb(b, a, true);
+		sort_small(a, b);
+		sort_large(a, b);
+		ft_lst_clear_ps(a);
+		ft_lst_clear_ps(b);
+	}
 }
 
 int	main(int argc, char **argv)
@@ -27,14 +38,19 @@ int	main(int argc, char **argv)
 
 	a = NULL;
 	b = NULL;
-	parse_args(&a, argc, argv);
-	if (!a || is_sorted(a))
+	if (parse_args(&a, argc, argv) == -1)
 	{
+		print_error();
 		ft_lst_clear_ps(&a);
+		ft_lst_clear_ps(&b);
 		return (0);
 	}
+	if (is_sorted(a))
+	{
+		ft_lst_clear_ps(&a);
+		ft_lst_clear_ps(&b);
+		return (1);
+	}
 	push_swap(&a, &b);
-	ft_lst_clear_ps(&a);
-	ft_lst_clear_ps(&b);
-	return (0);
+	return (1);
 }

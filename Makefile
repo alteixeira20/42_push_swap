@@ -1,4 +1,16 @@
 # **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
+#    Updated: 2025/02/18 14:00:26 by paalexan         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# **************************************************************************** #
 #                                  CONFIGURATION                               #
 # **************************************************************************** #
 
@@ -145,18 +157,21 @@ test_cases:
 		echo "$(GREY) Initial Stack: $$args"; \
 		# Capture push_swap output and count moves \
 		output=$$(./$(MAIN) $$args); \
-		moves=$$(echo "$$output" | wc -l); \
-		# Compute expected sorted stack \
-		expected_sorted=$$(echo "$$args" | tr ' ' '\n' | sort -n | tr '\n' ' '); \
-		# Capture final stack after applying moves \
-		final_stack=$$(echo "$$output" | ./$(TESTER) $$args | tail -n 1); \
-		echo "$(GREY) Expected Stack: $$expected_sorted"; \
-		# Sorting validation \
 		if [ "$$output" = "" ]; then \
 			final_result="OK"; \
+			moves=0; \
+			expected_sorted=$$(echo "$$args"); \
+			final_stack=$$(echo "$$args"); \
 		else \
 			final_result=$$(echo "$$output" | $(ORIGINAL_CHECKER) $$args); \
+			moves=$$(echo "$$output" | wc -l); \
+			# Compute expected sorted stack \
+			expected_sorted=$$(echo "$$args" | tr ' ' '\n' | sort -n | tr '\n' ' '); \
+			# Capture final stack after applying moves \
+			final_stack=$$(echo "$$output" | ./$(TESTER) $$args | tail -n 1); \
 		fi; \
+		echo "$(GREY) Expected Stack: $$expected_sorted"; \
+		# Sorting validation \
 		if [ "$$final_result" = "OK" ]; then \
 			echo "$(GREEN)	✅ Sorted Successfully in $$moves moves$(RESET)"; \
 		else \

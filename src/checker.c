@@ -6,36 +6,36 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:00:00 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/13 19:32:41 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:00:06 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	apply_move(char *move, t_stack **a, t_stack **b)
+static int	apply_move(char *move, t_stack **a, t_stack **b)
 {
 	if (!ft_strncmp(move, "sa\n", 3))
-		sa(a);
+		sa(a, false);
 	else if (!ft_strncmp(move, "sb\n", 3))
-		sb(b);
+		sb(b, false);
 	else if (!ft_strncmp(move, "ss\n", 3))
-		ss(a, b);
+		ss(a, b, false);
 	else if (!ft_strncmp(move, "pa\n", 3))
-		pa(a, b);
+		pa(a, b, false);
 	else if (!ft_strncmp(move, "pb\n", 3))
-		pb(b, a);
+		pb(b, a, false);
 	else if (!ft_strncmp(move, "ra\n", 3))
-		ra(a);
+		ra(a, false);
 	else if (!ft_strncmp(move, "rb\n", 3))
-		rb(b);
+		rb(b, false);
 	else if (!ft_strncmp(move, "rr\n", 3))
-		rr(a, b);
+		rr(a, b, false);
 	else if (!ft_strncmp(move, "rra\n", 4))
-		rra(a);
+		rra(a, false);
 	else if (!ft_strncmp(move, "rrb\n", 4))
-		rrb(b);
+		rrb(b, false);
 	else if (!ft_strncmp(move, "rrr\n", 4))
-		rrr(a, b);
+		rrr(a, b, false);
 	else
 		return (0);
 	return (1);
@@ -56,8 +56,9 @@ static int	read_and_apply_moves(t_stack **a, t_stack **b)
 			ft_putstr_fd("Error\n", 2);
 			return (0);
 		}
-		free(move);
+		move = get_next_line(0);
 	}
+	free(move);
 	return (1);
 }
 
@@ -71,10 +72,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (0);
 	if (!parse_args(&a, argc, argv))
-	{
-		ft_putstr_fd("Error\n", 2);
 		return (1);
-	}
 	if (!read_and_apply_moves(&a, &b))
 		return (1);
 	if (is_sorted(a) && !b)

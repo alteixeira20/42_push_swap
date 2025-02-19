@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/13 19:10:44 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:19:31 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@
 # include "../libft/libft/libft.h"
 # include "../libft/printf/ft_printf_bonus.h"
 # include "../libft/gnl/get_next_line_bonus.h"
+# include <stdbool.h>
 
 // Linked List
 typedef struct s_stack
 {
 	int				value;
+	int				current_pos;
 	int				index;
-	int				cost_a;
-	int				cost_b;
-	int				above_median;
+	int				push_cost;
+	bool			above_median;
+	bool			cheapest;
 	struct s_stack	*target_node;
 	struct s_stack	*next;
 }	t_stack;
@@ -42,17 +44,17 @@ void	ft_lst_assignindex_ps(t_stack *stack);
 t_stack	*ft_lst_findindex_ps(t_stack *stack, int index);
 
 // Stack Operations
-void	sa(t_stack **a);
-void	sb(t_stack **b);
-void	ss(t_stack **a, t_stack **b);
-void	pa(t_stack **a, t_stack **b);
-void	pb(t_stack **b, t_stack **a);
-void	ra(t_stack **a);
-void	rb(t_stack **b);
-void	rr(t_stack **a, t_stack **b);
-void	rra(t_stack **a);
-void	rrb(t_stack **b);
-void	rrr(t_stack **a, t_stack **b);
+void	sa(t_stack **a, bool print_flag);
+void	sb(t_stack **b, bool print_flag);
+void	ss(t_stack **a, t_stack **b, bool print_flag);
+void	pa(t_stack **a, t_stack **b, bool print_flag);
+void	pb(t_stack **b, t_stack **a, bool print_flag);
+void	ra(t_stack **a, bool print_flag);
+void	rb(t_stack **b, bool print_flag);
+void	rr(t_stack **a, t_stack **b, bool print_flag);
+void	rra(t_stack **a, bool print_flag);
+void	rrb(t_stack **b, bool print_flag);
+void	rrr(t_stack **a, t_stack **b, bool print_flag);
 
 // Parsing
 long	ft_atol_ps(const char *str);
@@ -65,9 +67,7 @@ void	print_error(void);
 void	sort_small(t_stack **a, t_stack **b);
 void	sort_large(t_stack **a, t_stack **b);
 int		is_sorted(t_stack *stack);
-
-// Costs
-void	assign_costs(t_stack *a, t_stack *b);
-t_stack	*find_cheapest_move(t_stack *b);
+void	init_nodes(t_stack *a, t_stack *b);
+void	set_current_position(t_stack *stack);
 
 #endif
