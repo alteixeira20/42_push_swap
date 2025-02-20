@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/18 14:00:26 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/20 00:22:00 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ SRC  := $(SRC_DIR)/push_swap.c \
 		$(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
         $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c \
         $(PARSE_DIR)/parsing.c $(PARSE_DIR)/parsing_utils.c $(PARSE_DIR)/parsing_errors.c \
-        $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c
+        $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c \
+		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c
 
 SRC_CHECKER  := $(SRC_DIR)/checker.c \
         $(LST_DIR)/ft_lst_new_ps.c $(LST_DIR)/ft_lst_clear_ps.c \
@@ -58,7 +59,8 @@ SRC_CHECKER  := $(SRC_DIR)/checker.c \
         $(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
         $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c \
         $(PARSE_DIR)/parsing.c $(PARSE_DIR)/parsing_utils.c $(PARSE_DIR)/parsing_errors.c \
-        $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c
+        $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c \
+		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c
 
 OBJ			:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 OBJ_CHECKER := $(patsubst $(SRC_DIR)/%.c, $(OBJ_CHECKER_DIR)/%.o, $(SRC_CHECKER))

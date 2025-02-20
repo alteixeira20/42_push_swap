@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/19 16:19:31 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/20 00:42:05 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,14 @@ int		check_errors(const char *arg, t_stack *stack);
 void	print_error(void);
 
 // Sorting
-void	sort_small(t_stack **a, t_stack **b);
-void	sort_large(t_stack **a, t_stack **b);
 int		is_sorted(t_stack *stack);
+int		calculate_cost_a(t_stack *a, t_stack *target_node);
+void	set_cost(t_stack *a, t_stack *b);
+void	set_cheapest(t_stack *b);
 void	init_nodes(t_stack *a, t_stack *b);
 void	set_current_position(t_stack *stack);
+void	push_cheapest_to_a(t_stack **a, t_stack **b);
+void	sort_small(t_stack **a, t_stack **b);
+void	sort_large(t_stack **a, t_stack **b);
 
 #endif

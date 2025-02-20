@@ -5,74 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 14:03:36 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/13 21:17:48 by paalexan         ###   ########.fr       */
+/*   Created: 2025/02/19 19:34:03 by paalexan          #+#    #+#             */
+/*   Updated: 2025/02/20 01:15:39 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
+#include <limits.h>
+#include <stdbool.h>
 
-static int	get_rotation_cost(t_stack *stack, t_stack *target)
+static t_stack	*get_closest_high_value(t_stack *a, int value, long *best_index)
 {
-	int	cost;
+	t_stack	*best_target;
 
-	cost = 0;
-	while (stack && stack != target)
+	best_target = NULL;
+	while (a)
 	{
-		cost++;
-		stack = stack->next;
-	}
-	return (cost);
-}
-
-void	assign_costs(t_stack *a, t_stack *b)
-{
-	int	mid_a;
-	int	mid_b;
-
-	mid_a = ft_lst_size_ps(a) / 2;
-	mid_b = ft_lst_size_ps(b) / 2;
-	while (b)
-	{
-		b->target_node = ft_lst_findindex_ps(a, b->index);
-		b->cost_a = get_rotation_cost(a, b->target_node);
-		b->cost_b = get_rotation_cost(b, b);
-		if (b->cost_a > mid_a)
-			b->cost_a = -(ft_lst_size_ps(a) - b->cost_a);
-		if (b->cost_b > mid_b)
-			b->cost_b = -(ft_lst_size_ps(b) - b->cost_b);
-		b = b->next;
-	}
-}
-
-t_stack	*find_cheapest_move(t_stack *b)
-{
-	t_stack	*cheapest_node;
-	int		min_cost;
-	int		current_cost;
-
-	cheapest_node = b;
-	min_cost = abs(b->cost_a) + abs(b->cost_b);
-	while (b)
-	{
-		current_cost = abs(b->cost_a) + abs(b->cost_b);
-		if (current_cost < min_cost)
+		if (a->value > value && a->value < *best_index)
 		{
-			min_cost = current_cost;
-			cheapest_node = b;
+			*best_index = a->value;
+			best_target = a;
 		}
-		b = b->next;
+		a = a->next;
 	}
-	return (cheapest_node);
+	return (best_target);
 }
 
-int	is_sorted(t_stack *stack)
+static void	set_target_node(t_stack *a, t_stack *b)
 {
-	while (stack && stack->next)
+	long	best_index;
+	t_stack	*target_node;
+
+	while (b)
 	{
-		if (stack->value > stack->next->value)
-			return (0);
-		stack = stack->next;
+		best_index = LONG_MAX;
+		target_node = get_closest_high_value(a, b->value, &best_index);
+		if (!target_node)
+			target_node = ft_lst_min_ps(a);
+		if (best_index == LONG_MAX)
+			b->target_node = ft_lst_min_ps(a);
+		else
+			b->target_node = target_node;
+		b = b->next;
 	}
-	return (1);
+}
+
+void	init_nodes(t_stack *a, t_stack *b)
+{
+	set_current_position(a);
+	set_current_position(b);
+	set_target_node(a, b);
+	set_cost(a, b);
+	set_cheapest(b);
 }
