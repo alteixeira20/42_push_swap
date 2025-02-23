@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 23:48:12 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/19 19:14:16 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:15:41 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,21 @@ static void	swap(t_stack **stack)
 	*stack = second;
 }
 
-void	sa(t_stack **a, bool print_flag)
+void	sa(t_stack **a, t_ops *moves)
 {
 	swap(a);
-	if (print_flag)
-		ft_printf("sa\n");
+	add_move(moves, "sa");
 }
 
-void	sb(t_stack **b, bool print_flag)
+void	sb(t_stack **b, t_ops *moves)
 {
 	swap(b);
-	if (print_flag)
-		ft_printf("sb\n");
+	add_move(moves, "sb");
 }
 
-void	ss(t_stack **a, t_stack **b, bool print_flag)
+void	ss(t_stack **a, t_stack **b, t_ops *moves)
 {
 	swap(a);
 	swap(b);
-	if (print_flag)
-		ft_printf("ss\n");
+	add_move(moves, "ss");
 }

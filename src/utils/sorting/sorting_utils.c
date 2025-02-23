@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:34:03 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/20 01:15:39 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:13:58 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ static void	set_target_node(t_stack *a, t_stack *b)
 		else
 			b->target_node = target_node;
 		b = b->next;
+	}
+}
+
+void	print_final_moves(t_ops *moves)
+{
+	int	i;
+
+	i = 0;
+	while (i < moves->count)
+	{
+		if (moves->operation[i] != NULL)
+			ft_printf("%s\n", moves->operation[i]);
+		i++;
 	}
 }
 

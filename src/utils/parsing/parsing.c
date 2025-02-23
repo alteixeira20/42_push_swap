@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:06:02 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/19 18:29:03 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/21 04:18:51 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,13 @@ static int	ft_isstringempty(char *str)
 	return (1);
 }
 
-static int	check_localerrors(int argc, char *argv)
-{
-	while (ft_isstringempty(argv) && argc > 2)
-	{
-		print_error();
-		return (1);
-	}
-	return (0);
-}
-
 int	parse_args(t_stack **a, int argc, char **argv)
 {
 	int	i;
 
 	if (argc < 2)
 		return (0);
-	if (check_localerrors(argc, argv[1]))
+	if (ft_isstringempty(argv[1]))
 		return (0);
 	i = 1;
 	while (i < argc)
@@ -88,12 +78,12 @@ int	parse_args(t_stack **a, int argc, char **argv)
 		if (ft_strchr(argv[i], ' '))
 		{
 			if (!parse_split_and_add(a, argv[i]))
-				return (0);
+				return (-1);
 		}
 		else
 		{
 			if (check_errors(argv[i], *a))
-				return (0);
+				return (-1);
 			convert_and_add(a, argv[i]);
 		}
 		i++;

@@ -2,8 +2,9 @@ libft/
 push_swap_tester
 test_script.sh
 .gitignore
-example
-my_push_swap.tar
+push_swap.tar
 traces.txt
-.visualizer
+push_swap_visualizer
 imgui.ini
+0
+pstester.py

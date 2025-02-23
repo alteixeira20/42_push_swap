@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/20 00:22:00 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/23 20:32:58 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ SRC  := $(SRC_DIR)/push_swap.c \
         $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c \
         $(PARSE_DIR)/parsing.c $(PARSE_DIR)/parsing_utils.c $(PARSE_DIR)/parsing_errors.c \
         $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c \
-		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c
+		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
+		$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
 
 SRC_CHECKER  := $(SRC_DIR)/checker.c \
         $(LST_DIR)/ft_lst_new_ps.c $(LST_DIR)/ft_lst_clear_ps.c \
@@ -60,7 +61,8 @@ SRC_CHECKER  := $(SRC_DIR)/checker.c \
         $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c \
         $(PARSE_DIR)/parsing.c $(PARSE_DIR)/parsing_utils.c $(PARSE_DIR)/parsing_errors.c \
         $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c \
-		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c
+		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
+		$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
 
 OBJ			:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 OBJ_CHECKER := $(patsubst $(SRC_DIR)/%.c, $(OBJ_CHECKER_DIR)/%.o, $(SRC_CHECKER))
@@ -90,7 +92,7 @@ ORANGE	:= $(shell tput setaf 214)
 # **************************************************************************** #
 
 # Default Rule - Compile push_swap
-all: $(LIBFT) $(MAIN) tester
+all: $(LIBFT) $(MAIN)
 
 $(LIBFT):
 	@if [ ! -d "$(LIBFT_DIR)" ]; then \
@@ -141,7 +143,7 @@ $(TESTER): $(LIBFT) $(OBJ_CHECKER_DIR)/tester.o $(filter-out $(OBJ_CHECKER_DIR)/
 # **************************************************************************** #
 
 # Run tests using different argument sizes
-test: $(MAIN) test_error
+test: $(MAIN) tester test_error
 
 # Define test cases and output results
 test_cases:
@@ -175,7 +177,7 @@ test_cases:
 		echo "$(GREY) Expected Stack: $$expected_sorted"; \
 		# Sorting validation \
 		if [ "$$final_result" = "OK" ]; then \
-			echo "$(GREEN)	✅ Sorted Successfully in $$moves moves$(RESET)"; \
+			echo "$(GREEN)	✅ Sorted Successfully in $$moves$(RESET)"; \
 		else \
 			echo "$(RED)	Sorting Failed:$(RESET)"; \
 			echo "$(RED)	⛔ Final Stack: $$final_stack$(RESET)"; \
@@ -222,6 +224,14 @@ test_error:
 			echo "$(GREEN)	✅ Error detected as expected$(RESET)"; \
 		else \
 			echo "$(RED)	❌ ERROR TEST FAILED$(RESET)"; \
+		fi; \
+		\
+		# Run Valgrind for error case \
+		valgrind_output=$$(valgrind $(VFLAGS) ./$(MAIN) $$args 2>&1 | grep "definitely lost:" | awk '{print $$4}'); \
+		if [ -z "$$valgrind_output" ] || [ "$$valgrind_output" = "0" ]; then \
+			echo "$(GREEN)	✅ Passed Valgrind Check$(RESET)"; \
+		else \
+			echo "$(RED)	❌ Valgrind Errors Detected$(RESET)"; \
 		fi; \
 	done < $(TEST_ERROR)
 

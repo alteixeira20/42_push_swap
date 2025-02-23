@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 20:34:35 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/20 00:44:12 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:03:34 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,21 @@ void	set_current_position(t_stack *stack)
 	}
 }
 
-void	sort_large(t_stack **a, t_stack **b)
+void	sort_large(t_stack **a, t_stack **b, t_ops *moves)
 {
 	t_stack	*min_node;
 
 	while (*b)
 	{
 		init_nodes(*a, *b);
-		push_cheapest_to_a(a, b);
+		push_cheapest_to_a(a, b, moves);
 	}
 	min_node = ft_lst_min_ps(*a);
 	while (*a != min_node)
 	{
 		if (min_node->above_median)
-			ra(a, true);
+			ra(a, moves);
 		else
-			rra(a, true);
+			rra(a, moves);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:24:42 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/19 16:21:50 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:11:24 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,21 @@ static void	reverse_rotate(t_stack **stack)
 	ft_lst_addtop_ps(stack, last);
 }
 
-void	rra(t_stack **a, bool print_flag)
+void	rra(t_stack **a, t_ops *moves)
 {
 	reverse_rotate(a);
-	if (print_flag)
-		ft_printf("rra\n");
+	add_move(moves, "rra");
 }
 
-void	rrb(t_stack **b, bool print_flag)
+void	rrb(t_stack **b, t_ops *moves)
 {
 	reverse_rotate(b);
-	if (print_flag)
-		ft_printf("rrb\n");
+	add_move(moves, "rrb");
 }
 
-void	rrr(t_stack **a, t_stack **b, bool print_flag)
+void	rrr(t_stack **a, t_stack **b, t_ops *moves)
 {
 	reverse_rotate(a);
 	reverse_rotate(b);
-	if (print_flag)
-		ft_printf("rrr\n");
+	add_move(moves, "rrr");
 }

@@ -6,13 +6,13 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:38:46 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/19 16:16:17 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:10:20 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
-void	pa(t_stack **a, t_stack **b, bool print_flag)
+void	pa(t_stack **a, t_stack **b, t_ops *moves)
 {
 	t_stack	*temp;
 
@@ -22,11 +22,10 @@ void	pa(t_stack **a, t_stack **b, bool print_flag)
 	*b = (*b)->next;
 	temp->next = NULL;
 	ft_lst_addtop_ps(a, temp);
-	if (print_flag)
-		ft_printf("pa\n");
+	add_move(moves, "pa");
 }
 
-void	pb(t_stack **b, t_stack **a, bool print_flag)
+void	pb(t_stack **b, t_stack **a, t_ops *moves)
 {
 	t_stack	*temp;
 
@@ -36,6 +35,5 @@ void	pb(t_stack **b, t_stack **a, bool print_flag)
 	*a = (*a)->next;
 	temp->next = NULL;
 	ft_lst_addtop_ps(b, temp);
-	if (print_flag)
-		ft_printf("pb\n");
+	add_move(moves, "pb");
 }

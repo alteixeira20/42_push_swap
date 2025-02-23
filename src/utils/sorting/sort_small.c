@@ -6,13 +6,13 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:09:57 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/19 17:37:43 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:51:54 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
-static void	rotate_to_top(t_stack **stack, t_stack *target)
+static void	rotate_to_top(t_stack **stack, t_stack *target, t_ops *moves)
 {
 	int		size;
 	int		pos;
@@ -28,13 +28,13 @@ static void	rotate_to_top(t_stack **stack, t_stack *target)
 	}
 	if (pos <= size / 2)
 		while (*stack != target)
-			ra(stack, true);
+			ra(stack, moves);
 	else
 		while (*stack != target)
-			rra(stack, true);
+			rra(stack, moves);
 }
 
-static void	sort_3(t_stack **a)
+static void	sort_3(t_stack **a, t_ops *moves)
 {
 	int	first;
 	int	second;
@@ -44,36 +44,36 @@ static void	sort_3(t_stack **a)
 	second = (*a)->next->value;
 	third = (*a)->next->next->value;
 	if (first > second && second < third && first < third)
-		sa(a, true);
+		sa(a, moves);
 	else if (first > second && second > third)
 	{
-		sa(a, true);
-		rra(a, true);
+		sa(a, moves);
+		rra(a, moves);
 	}
 	else if (first > second && second < third && first > third)
-		ra(a, true);
+		ra(a, moves);
 	else if (first < second && second > third && first < third)
 	{
-		sa(a, true);
-		ra(a, true);
+		sa(a, moves);
+		ra(a, moves);
 	}
 	else if (first < second && second > third && first > third)
-		rra(a, true);
+		rra(a, moves);
 }
 
-static void	sort_4(t_stack **a, t_stack **b)
+static void	sort_4(t_stack **a, t_stack **b, t_ops *moves)
 {
 	t_stack	*min_node;
 
 	ft_lst_assignindex_ps(*a);
 	min_node = ft_lst_min_ps(*a);
-	rotate_to_top(a, min_node);
-	pb(b, a, true);
-	sort_3(a);
-	pa(a, b, true);
+	rotate_to_top(a, min_node, moves);
+	pb(b, a, moves);
+	sort_3(a, moves);
+	pa(a, b, moves);
 }
 
-static void	sort_5(t_stack **a, t_stack **b)
+static void	sort_5(t_stack **a, t_stack **b, t_ops *moves)
 {
 	t_stack	*min_node;
 
@@ -81,17 +81,17 @@ static void	sort_5(t_stack **a, t_stack **b)
 	{
 		ft_lst_assignindex_ps(*a);
 		min_node = ft_lst_min_ps(*a);
-		rotate_to_top(a, min_node);
-		pb(b, a, true);
+		rotate_to_top(a, min_node, moves);
+		pb(b, a, moves);
 	}
-	sort_3(a);
+	sort_3(a, moves);
 	if ((*b)->value < (*b)->next->value)
-		sb(b, true);
-	pa(a, b, true);
-	pa(a, b, true);
+		sb(b, moves);
+	pa(a, b, moves);
+	pa(a, b, moves);
 }
 
-void	sort_small(t_stack **a, t_stack **b)
+void	sort_small(t_stack **a, t_stack **b, t_ops *moves)
 {
 	int	size;
 
@@ -99,14 +99,12 @@ void	sort_small(t_stack **a, t_stack **b)
 	if (size == 2)
 	{
 		if ((*a)->value > (*a)->next->value)
-			sa(a, 1);
+			sa(a, moves);
 	}
 	else if (size == 3)
-		sort_3(a);
+		sort_3(a, moves);
 	else if (size == 4)
-	{
-		sort_4(a, b);
-	}
+		sort_4(a, b, moves);
 	else if (size == 5)
-		sort_5(a, b);
+		sort_5(a, b, moves);
 }

@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:20:11 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/13 19:33:41 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/21 01:28:57 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ long	ft_atol_ps(const char *str)
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			print_error();
+			break ;
 		result = result * 10 + (str[i] - '0');
 		if ((sign == 1 && result > INT_MAX)
 			|| (sign == -1 && sign * result < INT_MIN))
-			print_error();
+			break ;
 		i++;
 	}
 	return (result * sign);

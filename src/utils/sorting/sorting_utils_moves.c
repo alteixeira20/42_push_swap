@@ -6,80 +6,86 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 00:07:34 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/20 01:28:37 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:50:06 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
 
-static void	mv_both(t_stack **a, t_stack **b, t_stack *target, t_stack *node)
+void	mv_both(t_general *data, t_stack *target, t_stack *node)
 {
 	if (target->above_median && node->above_median)
-		rr(a, b, true);
+		rr(data->a, data->b, data->moves);
 	else if (!target->above_median && !node->above_median)
-		rrr(a, b, true);
+		rrr(data->a, data->b, data->moves);
 	else
 	{
 		if (target->above_median)
-			ra(a, true);
+			ra(data->a, data->moves);
 		else
-			rra(a, true);
+			rra(data->a, data->moves);
 		if (node->above_median)
-			rb(b, true);
+			rb(data->b, data->moves);
 		else
-			rrb(b, true);
+			rrb(data->b, data->moves);
 	}
 }
 
-static void	mv_single(t_stack **a, t_stack **b, t_stack *target, t_stack *node)
+void	mv_single(t_general *data, t_stack *target, t_stack *node)
 {
-	if (*a != target)
+	if (*(data->a) != target)
 	{
 		if (target->above_median)
-			ra(a, true);
+			ra(data->a, data->moves);
 		else
-			rra(a, true);
+			rra(data->a, data->moves);
 	}
-	if (*b != node)
+	if (*(data->b) != node)
 	{
 		if (node->above_median)
-			rb(b, true);
+			rb(data->b, data->moves);
 		else
-			rrb(b, true);
+			rrb(data->b, data->moves);
 	}
 }
 
-static void	mv_totop(t_stack **a, t_stack **b, t_stack *target, t_stack *node)
+void	mv_totop(t_general *data, t_stack *target, t_stack *node)
 {
-	while (*a != target || *b != node)
+	while (*(data->a) != target || *(data->b) != node)
 	{
-		set_current_position(*a);
-		set_current_position(*b);
-		if (*a != target && *b != node)
-			mv_both(a, b, target, node);
+		set_current_position(*(data->a));
+		set_current_position(*(data->b));
+		if (*(data->a) != target && *(data->b) != node)
+			mv_both(data, target, node);
 		else
-			mv_single(a, b, target, node);
+			mv_single(data, target, node);
 	}
 }
 
-void	push_cheapest_to_a(t_stack **a, t_stack **b)
+void	remove_move(t_ops *moves, int index)
 {
-	t_stack	*cheapest_node;
-	t_stack	*temp;
-
-	cheapest_node = NULL;
-	temp = *b;
-	while (temp)
-	{
-		if (temp->cheapest)
-		{
-			cheapest_node = temp;
-			break ;
-		}
-		temp = temp->next;
-	}
-	if (!cheapest_node)
+	if (index < 0 || index >= moves->count || moves->operation[index] == NULL)
 		return ;
-	mv_totop(a, b, cheapest_node->target_node, cheapest_node);
-	pa(a, b, true);
+	free(moves->operation[index]);
+	moves->operation[index] = NULL;
+	while (index < moves->count - 1)
+	{
+		moves->operation[index] = moves->operation[index + 1];
+		index++;
+	}
+	moves->operation[moves->count - 1] = NULL;
+	moves->count--;
+}
+
+void	add_move(t_ops *moves, const char *op)
+{
+	if (!moves)
+		return ;
+	if (moves->count < MAX_OPS)
+	{
+		moves->operation[moves->count] = ft_strdup(op);
+		if (!moves->operation[moves->count])
+			return ;
+		moves->count++;
+	}
 }
