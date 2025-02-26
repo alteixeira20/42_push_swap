@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/26 18:08:52 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/26 18:11:51 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -291,7 +291,8 @@ fclean: clean
 	@find $(LIBFT_DIR) -name '.nfs*' -exec rm -f {} + 2>/dev/null || true
 	@rm -rf $(RESULTS_DIR) 2>/dev/null || true
 	@rm -rf $(LIBFT_DIR)
-	@rm -f test_valid.txt test_error.txt checker_linux
+	@rm -f test_valid.txt test_error.txt test_checker.txt
+	@rm -f checker_linux
 	@rm -f src/tester.c
 	@echo "$(YELLOW)🗑 Cleaned up Libft and Results directory.$(RESET)"
 
