@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/26 18:11:51 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/26 18:14:05 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -139,8 +139,8 @@ bonus: $(LIBFT) $(OBJ_CHECKER)
 	@$(CC) $(CFLAGS) $(OBJ_CHECKER) $(LIBFT) -o $(CUSTOM_CHECKER)
 	@echo "$(BOLD)✅ Checker Compiled Successfully!$(RESET)"
 
-$(TESTER): $(LIBFT) $(OBJ_CHECKER_DIR)/tester.o $(filter-out $(OBJ_CHECKER_DIR)/checker.o, $(OBJ_CHECKER))
-	@$(CC) $(CFLAGS) $(OBJ_CHECKER_DIR)/tester.o $(filter-out $(OBJ_CHECKER_DIR)/checker.o, $(OBJ_CHECKER)) $(LIBFT) -o $(TESTER)
+$(TESTER): $(LIBFT) $(OBJ_CHECKER_DIR)/tester.o $(filter-out $(OBJ_CHECKER_DIR)/checker_bonus.o, $(OBJ_CHECKER))
+	@$(CC) $(CFLAGS) $(OBJ_CHECKER_DIR)/tester.o $(filter-out $(OBJ_CHECKER_DIR)/checker_bonus.o, $(OBJ_CHECKER)) $(LIBFT) -o $(TESTER)
 	@echo "$(BOLD)✅ Tester Compiled Successfully!$(RESET)"
 
 # **************************************************************************** #
