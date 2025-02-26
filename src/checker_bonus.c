@@ -6,11 +6,17 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:00:00 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/26 18:00:01 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:14:22 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static void	free_lst(t_stack **a, t_stack **b)
+{
+	ft_lst_clear_ps(a);
+	ft_lst_clear_ps(b);
+}
 
 static int	apply_move(char *move, t_stack **a, t_stack **b)
 {
@@ -44,7 +50,7 @@ static int	apply_move(char *move, t_stack **a, t_stack **b)
 static int	read_and_apply_moves(t_stack **a, t_stack **b)
 {
 	char	*move;
-	
+
 	move = get_next_line(0);
 	while (move)
 	{
@@ -73,21 +79,18 @@ int	main(int argc, char **argv)
 		return (0);
 	if (parse_args(&a, argc, argv) != 1)
 	{
-		ft_lst_clear_ps(&a);
-		ft_lst_clear_ps(&b);
+		free_lst(&a, &b);
 		return (1);
 	}
 	if (!read_and_apply_moves(&a, &b))
 	{
-		ft_lst_clear_ps(&a);
-		ft_lst_clear_ps(&b);
+		free_lst(&a, &b);
 		return (1);
 	}
 	if (is_sorted(a) && !b)
 		ft_putstr_fd("OK\n", 1);
 	else
 		ft_putstr_fd("KO\n", 1);
-	ft_lst_clear_ps(&a);
-	ft_lst_clear_ps(&b);
+	free_lst(&a, &b);
 	return (0);
 }
