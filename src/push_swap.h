@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:48:38 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/23 20:28:53 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:39:18 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "../libft/gnl/get_next_line_bonus.h"
 # include <stdbool.h>
 
-# define MAX_OPS 1000000
+# define MAX_OPS 10000
 
 // Linked List for Operations
 typedef struct s_ops

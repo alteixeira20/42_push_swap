@@ -1,0 +1,15 @@
+# Error Handling Tests
+3 2 one 0
+"" 1
+2147483648 1 2
+0 21474836848 1 2
+"0 1 2147483648 2"
+
+# False Tests (wrong operations)
+"sa\npb\nrrr" | 0 9 1 8 2 7 3 6 4 5
+"sa\nrra\npb" | 3 2 1 0
+
+# Success Tests
+0 1 2
+"pb\nra\npb\nra\nsa\nra\npa\npa" | 0 9 1 8 2
+"rra\npb\nsa\nrra\npa" | 3 2 1 -1

@@ -8,3 +8,4 @@ push_swap_visualizer
 imgui.ini
 0
 pstester.py
+.nfs*

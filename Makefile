@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/23 20:32:58 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/26 18:08:52 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ SRC  := $(SRC_DIR)/push_swap.c \
 		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
 		$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
 
-SRC_CHECKER  := $(SRC_DIR)/checker.c \
+SRC_CHECKER  := $(SRC_DIR)/checker_bonus.c \
         $(LST_DIR)/ft_lst_new_ps.c $(LST_DIR)/ft_lst_clear_ps.c \
         $(LST_DIR)/ft_lst_addtop_ps.c $(LST_DIR)/ft_lst_addbottom_ps.c \
         $(LST_DIR)/ft_lst_size_ps.c $(LST_DIR)/ft_lst_last_ps.c \
@@ -64,19 +64,20 @@ SRC_CHECKER  := $(SRC_DIR)/checker.c \
 		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
 		$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
 
-OBJ			:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
-OBJ_CHECKER := $(patsubst $(SRC_DIR)/%.c, $(OBJ_CHECKER_DIR)/%.o, $(SRC_CHECKER))
+OBJ		:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
+OBJ_CHECKER	:= $(patsubst $(SRC_DIR)/%.c, $(OBJ_CHECKER_DIR)/%.o, $(SRC_CHECKER))
 
 # Executable
-MAIN				:= push_swap
+MAIN			:= push_swap
 ORIGINAL_CHECKER	:= ./checker_linux
 CUSTOM_CHECKER		:= checker
-TESTER				:= tester
-SHELL				:= /bin/bash
+TESTER			:= tester
+SHELL			:= /bin/bash
 
 # Test Files
-TEST_VALID 			:= test_valid.txt
-TEST_ERROR			:= test_error.txt
+TEST_VALID 		:= test_valid.txt
+TEST_ERROR		:= test_error.txt
+TEST_CHECKER		:= test_checker.txt
 
 # Colors
 BOLD 	:= $(shell tput bold)
@@ -100,7 +101,11 @@ $(LIBFT):
 		git clone $(LIBFT_REPO) $(LIBFT_DIR); \
 	fi
 	@$(MAKE) -C $(LIBFT_DIR)
-
+	@cp $(LIBFT_DIR)/push_swap/checker_linux .
+	@cp $(LIBFT_DIR)/push_swap/test_valid.txt $(LIBFT_DIR)/push_swap/test_error.txt .
+	@cp $(LIBFT_DIR)/push_swap/test_checker.txt .
+	@cp $(LIBFT_DIR)/push_swap/tester.c src/
+	@echo "$(GREEN)✅ Copied checker_linux, test cases and tester program.$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -130,7 +135,7 @@ $(MAIN): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(MAIN)
 	@echo "$(BOLD)✅ push_swap Compiled Successfully!$(RESET)"
 
-$(CUSTOM_CHECKER): $(LIBFT) $(OBJ_CHECKER)
+bonus: $(LIBFT) $(OBJ_CHECKER)
 	@$(CC) $(CFLAGS) $(OBJ_CHECKER) $(LIBFT) -o $(CUSTOM_CHECKER)
 	@echo "$(BOLD)✅ Checker Compiled Successfully!$(RESET)"
 
@@ -235,6 +240,42 @@ test_error:
 		fi; \
 	done < $(TEST_ERROR)
 
+test_checker: bonus
+	@mkdir -p $(RESULTS_DIR)
+	@if [ ! -s $(TEST_CHECKER) ]; then \
+		echo "$(RED)❌ Error: test_checker.txt is missing or empty!$(RESET)"; \
+		exit 1; \
+	fi
+	@echo "$(BOLD)-----------------------------------$(RESET)"
+	@echo "$(BOLD)🔍 Running Checker Tests$(RESET)"
+	@echo "$(BOLD)-----------------------------------$(RESET)"
+	@while IFS= read -r line; do \
+		if [[ "$$line" =~ ^#.*$$ ]] || [ -z "$$line" ]; then continue; fi; \
+		args=$$(echo "$$line" | cut -d '|' -f 1); \
+		instructions=$$(echo "$$line" | cut -d '|' -f 2); \
+		echo "$(ORANGE)Test Case: $(RESET) $$args"; \
+		if [ -z "$$instructions" ]; then \
+			output=$$(./$(CUSTOM_CHECKER) $$args 2>&1); \
+		else \
+			echo "$$instructions" | ./$(CUSTOM_CHECKER) $$args 2>&1; \
+		fi; \
+		if [ "$$output" = "OK" ]; then \
+			echo "$(GREEN)✅ Passed$(RESET)"; \
+		elif [ "$$output" = "KO" ]; then \
+			echo "$(RED)❌ Sorting Incorrect$(RESET)"; \
+		else \
+			echo "$(RED)❌ ERROR DETECTED: $$output$(RESET)"; \
+		fi; \
+		\
+		# Run Valgrind for memory leak check \
+		valgrind_output=$$(valgrind $(VFLAGS) ./$(CUSTOM_CHECKER) $$args 2>&1 | grep "definitely lost:" | awk '{print $$4}'); \
+		if [ -z "$$valgrind_output" ] || [ "$$valgrind_output" = "0" ]; then \
+			echo "$(GREEN)✅ Passed Valgrind Check$(RESET)"; \
+		else \
+			echo "$(RED)❌ Valgrind Errors Detected$(RESET)"; \
+		fi; \
+	done < $(TEST_CHECKER)
+
 clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(OBJ_CHECKER_DIR)
@@ -244,8 +285,14 @@ clean:
 	@echo "$(YELLOW)🗑 Cleaned Object directories and Executables.$(RESET)"
 
 fclean: clean
-	@rm -rf $(RESULTS_DIR)
+	@lsof | grep .nfs | grep checker | awk '{print $2}' | xargs -r kill -9
+	@sleep 1  # Wait a bit to allow NFS to clean up
+	@find $(RESULTS_DIR) -name '.nfs*' -exec rm -f {} + 2>/dev/null || true
+	@find $(LIBFT_DIR) -name '.nfs*' -exec rm -f {} + 2>/dev/null || true
+	@rm -rf $(RESULTS_DIR) 2>/dev/null || true
 	@rm -rf $(LIBFT_DIR)
+	@rm -f test_valid.txt test_error.txt checker_linux
+	@rm -f src/tester.c
 	@echo "$(YELLOW)🗑 Cleaned up Libft and Results directory.$(RESET)"
 
 re: fclean all
