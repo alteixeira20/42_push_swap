@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/27 00:50:31 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/27 00:52:15 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -146,7 +146,7 @@ $(TESTER): $(LIBFT) $(OBJ_CHECKER_DIR)/tester.o $(filter-out $(OBJ_CHECKER_DIR)/
 # **************************************************************************** #
 
 # Run tests using different argument sizes
-test: $(MAIN) tester test_error
+test: all tester test_error
 
 # Define test cases and output results
 test_cases:

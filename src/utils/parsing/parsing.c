@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:06:02 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/21 04:18:51 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/27 01:18:07 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	parse_args(t_stack **a, int argc, char **argv)
 
 	if (argc < 2)
 		return (0);
-	if (ft_isstringempty(argv[1]))
+	if (ft_isstringempty(argv[1]) && !argv[2])
 		return (0);
 	i = 1;
 	while (i < argc)
