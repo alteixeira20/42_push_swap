@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:00:00 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/26 20:14:22 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:01:23 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,26 @@ static int	apply_move(char *move, t_stack **a, t_stack **b)
 static int	read_and_apply_moves(t_stack **a, t_stack **b)
 {
 	char	*move;
+	bool	flag;
 
+	flag = true;
 	move = get_next_line(0);
-	while (move)
+	while (move || flag)
 	{
+		flag = false;
+		if (!move)
+			break;
 		if (!apply_move(move, a, b))
 		{
 			free(move);
-			ft_lst_clear_ps(a);
-			ft_lst_clear_ps(b);
+			get_next_line(-1);
 			ft_putstr_fd("Error\n", 2);
 			return (0);
 		}
 		free(move);
 		move = get_next_line(0);
 	}
+	free(move);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 #    By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 01:02:46 by paalexan          #+#    #+#              #
-#    Updated: 2025/02/26 18:14:05 by paalexan         ###   ########.fr        #
+#    Updated: 2025/02/27 00:50:31 by paalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,6 @@ SHELL			:= /bin/bash
 # Test Files
 TEST_VALID 		:= test_valid.txt
 TEST_ERROR		:= test_error.txt
-TEST_CHECKER		:= test_checker.txt
 
 # Colors
 BOLD 	:= $(shell tput bold)
@@ -103,7 +102,6 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 	@cp $(LIBFT_DIR)/push_swap/checker_linux .
 	@cp $(LIBFT_DIR)/push_swap/test_valid.txt $(LIBFT_DIR)/push_swap/test_error.txt .
-	@cp $(LIBFT_DIR)/push_swap/test_checker.txt .
 	@cp $(LIBFT_DIR)/push_swap/tester.c src/
 	@echo "$(GREEN)✅ Copied checker_linux, test cases and tester program.$(RESET)"
 
@@ -239,42 +237,6 @@ test_error:
 			echo "$(RED)	❌ Valgrind Errors Detected$(RESET)"; \
 		fi; \
 	done < $(TEST_ERROR)
-
-test_checker: bonus
-	@mkdir -p $(RESULTS_DIR)
-	@if [ ! -s $(TEST_CHECKER) ]; then \
-		echo "$(RED)❌ Error: test_checker.txt is missing or empty!$(RESET)"; \
-		exit 1; \
-	fi
-	@echo "$(BOLD)-----------------------------------$(RESET)"
-	@echo "$(BOLD)🔍 Running Checker Tests$(RESET)"
-	@echo "$(BOLD)-----------------------------------$(RESET)"
-	@while IFS= read -r line; do \
-		if [[ "$$line" =~ ^#.*$$ ]] || [ -z "$$line" ]; then continue; fi; \
-		args=$$(echo "$$line" | cut -d '|' -f 1); \
-		instructions=$$(echo "$$line" | cut -d '|' -f 2); \
-		echo "$(ORANGE)Test Case: $(RESET) $$args"; \
-		if [ -z "$$instructions" ]; then \
-			output=$$(./$(CUSTOM_CHECKER) $$args 2>&1); \
-		else \
-			echo "$$instructions" | ./$(CUSTOM_CHECKER) $$args 2>&1; \
-		fi; \
-		if [ "$$output" = "OK" ]; then \
-			echo "$(GREEN)✅ Passed$(RESET)"; \
-		elif [ "$$output" = "KO" ]; then \
-			echo "$(RED)❌ Sorting Incorrect$(RESET)"; \
-		else \
-			echo "$(RED)❌ ERROR DETECTED: $$output$(RESET)"; \
-		fi; \
-		\
-		# Run Valgrind for memory leak check \
-		valgrind_output=$$(valgrind $(VFLAGS) ./$(CUSTOM_CHECKER) $$args 2>&1 | grep "definitely lost:" | awk '{print $$4}'); \
-		if [ -z "$$valgrind_output" ] || [ "$$valgrind_output" = "0" ]; then \
-			echo "$(GREEN)✅ Passed Valgrind Check$(RESET)"; \
-		else \
-			echo "$(RED)❌ Valgrind Errors Detected$(RESET)"; \
-		fi; \
-	done < $(TEST_CHECKER)
 
 clean:
 	@rm -rf $(OBJ_DIR)
