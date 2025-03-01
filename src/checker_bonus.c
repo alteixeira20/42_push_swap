@@ -6,7 +6,7 @@
 /*   By: paalexan <paalexan@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 22:00:00 by paalexan          #+#    #+#             */
-/*   Updated: 2025/02/26 23:01:23 by paalexan         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:50:47 by paalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	read_and_apply_moves(t_stack **a, t_stack **b)
 	{
 		flag = false;
 		if (!move)
-			break;
+			break ;
 		if (!apply_move(move, a, b))
 		{
 			free(move);
