@@ -1,0 +1,10 @@
+3 2 1 0 | rra pb sa rra pa | OK
+3 2 1 0 | sa rra pb | KO
+4 3 2 1 | pb pb pb pa pa pa | OK
+5 1 2 3 4 | | OK
+5 1 2 3 4 | pb sa pa | KO
+5 1 2 3 4 | invalid_op | Error
+3 2 b 0 | | Error
+3 2 2 | | Error
+3 2 2147483648 | | Error
+ | | 

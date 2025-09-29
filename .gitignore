@@ -1,4 +1,6 @@
 libft/
+obj/
+obj_checker/
 push_swap_tester
 test_script.sh
 .gitignore

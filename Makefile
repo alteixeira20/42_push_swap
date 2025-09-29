@@ -15,24 +15,24 @@
 # **************************************************************************** #
 
 # Compiler and Flags
-CC       		:= cc
-CFLAGS   		:= -Wall -Wextra -Werror -g
-VFLAGS   		:= --leak-check=full --show-leak-kinds=all --track-origins=yes
+CC      	:= cc
+CFLAGS   	:= -Wall -Wextra -Werror -g
+VFLAGS		:= --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 # Directories
-SRC_DIR  := src
-LST_DIR  := $(SRC_DIR)/utils/lst
-OPS_DIR  := $(SRC_DIR)/utils/ops/
-PARSE_DIR := $(SRC_DIR)/utils/parsing
-SORT_DIR := $(SRC_DIR)/utils/sorting
-OBJ_DIR  := obj
-OBJ_CHECKER_DIR := obj_checker
-RESULTS_DIR := results
+SRC_DIR		:= src
+LST_DIR		:= $(SRC_DIR)/utils/lst
+OPS_DIR		:= $(SRC_DIR)/utils/ops/
+PARSE_DIR	:= $(SRC_DIR)/utils/parsing
+SORT_DIR	:= $(SRC_DIR)/utils/sorting
+OBJ_DIR		:= obj
+OBJ_CHECKER_DIR	:= obj_checker
+RESULTS_DIR	:= results
 
 # Libft
-LIBFT_REPO := https://github.com/alteixeira20/42_libft.git
-LIBFT_DIR := libft
-LIBFT := $(LIBFT_DIR)/libft.a
+LIBFT_REPO	:= https://github.com/alteixeira20/42_libft.git
+LIBFT_DIR	:= libft
+LIBFT		:= $(LIBFT_DIR)/libft.a
 
 # Test Cases
 TEST_VALID := test_valid.txt
@@ -44,12 +44,12 @@ SRC  := $(SRC_DIR)/push_swap.c \
         $(LST_DIR)/ft_lst_size_ps.c $(LST_DIR)/ft_lst_last_ps.c \
         $(LST_DIR)/ft_lst_assignindex_ps.c $(LST_DIR)/ft_lst_findindex_ps.c \
         $(LST_DIR)/ft_lst_max_ps.c $(LST_DIR)/ft_lst_min_ps.c \
-		$(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
+	$(OPS_DIR)/push.c $(OPS_DIR)/swap.c \
         $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c \
         $(PARSE_DIR)/parsing.c $(PARSE_DIR)/parsing_utils.c $(PARSE_DIR)/parsing_errors.c \
         $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c \
-		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
-		$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
+	$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
+	$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
 
 SRC_CHECKER  := $(SRC_DIR)/checker_bonus.c \
         $(LST_DIR)/ft_lst_new_ps.c $(LST_DIR)/ft_lst_clear_ps.c \
@@ -61,11 +61,11 @@ SRC_CHECKER  := $(SRC_DIR)/checker_bonus.c \
         $(OPS_DIR)/rotate.c $(OPS_DIR)/reverserotate.c \
         $(PARSE_DIR)/parsing.c $(PARSE_DIR)/parsing_utils.c $(PARSE_DIR)/parsing_errors.c \
         $(SORT_DIR)/sort_small.c $(SORT_DIR)/sort_large.c $(SORT_DIR)/sorting_utils.c \
-		$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
-		$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
+	$(SORT_DIR)/sorting_utils_cost.c $(SORT_DIR)/sorting_utils_moves.c \
+	$(SORT_DIR)/sorting_cleanup.c $(SORT_DIR)/sorting_utils_cleanup.c $(SORT_DIR)/sorting_chunks.c
 
-OBJ		:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
-OBJ_CHECKER	:= $(patsubst $(SRC_DIR)/%.c, $(OBJ_CHECKER_DIR)/%.o, $(SRC_CHECKER))
+OBJ			:= $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
+OBJ_CHECKER		:= $(patsubst $(SRC_DIR)/%.c, $(OBJ_CHECKER_DIR)/%.o, $(SRC_CHECKER))
 
 # Executable
 MAIN			:= push_swap
@@ -100,9 +100,6 @@ $(LIBFT):
 		git clone $(LIBFT_REPO) $(LIBFT_DIR); \
 	fi
 	@$(MAKE) -C $(LIBFT_DIR)
-	@cp $(LIBFT_DIR)/push_swap/checker_linux .
-	@cp $(LIBFT_DIR)/push_swap/test_valid.txt $(LIBFT_DIR)/push_swap/test_error.txt .
-	@cp $(LIBFT_DIR)/push_swap/tester.c src/
 	@echo "$(GREEN)✅ Copied checker_linux, test cases and tester program.$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -247,15 +244,8 @@ clean:
 	@echo "$(YELLOW)🗑 Cleaned Object directories and Executables.$(RESET)"
 
 fclean: clean
-	@lsof | grep .nfs | grep checker | awk '{print $2}' | xargs -r kill -9
-	@sleep 1  # Wait a bit to allow NFS to clean up
-	@find $(RESULTS_DIR) -name '.nfs*' -exec rm -f {} + 2>/dev/null || true
-	@find $(LIBFT_DIR) -name '.nfs*' -exec rm -f {} + 2>/dev/null || true
 	@rm -rf $(RESULTS_DIR) 2>/dev/null || true
 	@rm -rf $(LIBFT_DIR)
-	@rm -f test_valid.txt test_error.txt test_checker.txt
-	@rm -f checker_linux
-	@rm -f src/tester.c
 	@echo "$(YELLOW)🗑 Cleaned up Libft and Results directory.$(RESET)"
 
 re: fclean all
